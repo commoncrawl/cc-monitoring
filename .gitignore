@@ -1,0 +1,4 @@
+.eggs/
+build/
+cc_monitoring.egg-info/
+__pycache__
