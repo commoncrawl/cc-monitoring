@@ -34,6 +34,7 @@ def initdb(cmd):
 
     if cmd.wal != 0:
         # cli.py default is None, which != 0
+        # there are places below which assume WAL is on
         configure_wal(cur, cmd.wal, verbose=verbose)
 
     cur.close()
