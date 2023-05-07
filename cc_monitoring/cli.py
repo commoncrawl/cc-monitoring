@@ -30,14 +30,15 @@ def main(args=None):
     return cmd.func(cmd)
 
 
-def sleep_some(t_start, t_next, dt):
+def sleep_some(t_next, dt, verbose=0):
     if t_next is not None:
-        delta = t_next - t_start
+        delta = t_next - time.time()
         if delta > 0:
-            print('sleeping for', delta, file=sys.stderr)
+            if verbose:
+                print('sleeping for', delta, file=sys.stderr)
             sys.stderr.flush()
             time.sleep(delta)
-    return t_start + dt
+    return time.time() + dt
 
 
 def collect_cli(cmd):
@@ -50,8 +51,8 @@ def collect_cli(cmd):
 
     try:
         while True:
+            t_next = sleep_some(t_next, dt, verbose=verbose)
             t_start = time.time()
-            t_next = sleep_some(t_start, t_next, dt)
 
             data, errors = collect.collect_one(verbose=verbose)
             sqlite.write(con, t_start, 'timing', data, verbose=verbose)
