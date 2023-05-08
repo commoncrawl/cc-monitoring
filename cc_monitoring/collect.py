@@ -4,6 +4,8 @@ import random
 import sys
 from collections import defaultdict
 from functools import partial
+import sys
+import traceback
 
 import requests
 
@@ -167,7 +169,13 @@ def collect_loop(sqlitedb, dt, verbose=0):
             t_next = sleep_some(t_next, dt, verbose=verbose)
             t_start = time.time()
 
-            data, errors = collect_one(verbose=verbose)
+            try:
+                data, errors = collect_one(verbose=verbose)
+            except Exception as e:
+                print('Caught an exception collecting data, skipping this cycle', file=sys.stderr)
+                traceback.print_exc(file=sys.stderr)
+                continue
+
             sqlite.write(con, t_start, 'timing', data, verbose=verbose)
             if len(errors) or last_errors_notnull:
                 sqlite.write(con, t_start, 'errors', errors, verbose=verbose)
