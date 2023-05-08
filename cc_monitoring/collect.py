@@ -97,7 +97,7 @@ def wrap(func, errors, url='pbm.com'):
         elif isinstance(e, requests.ConnectionError):
             kind = 'connection_error'
         elif isinstance(e, requests.HTTPError):
-            if e.resp.status_code in {500, 503}:
+            if e.response.status_code in {500, 503}:
                 kind = 'slow_down'
             else:
                 kind = 'http_'+str(e.resp.status_code)
