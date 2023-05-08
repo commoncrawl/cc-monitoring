@@ -30,40 +30,5 @@ def main(args=None):
     return cmd.func(cmd)
 
 
-def sleep_some(t_next, dt, verbose=0):
-    if t_next is not None:
-        delta = t_next - time.time()
-        if delta > 0:
-            if verbose:
-                print('sleeping for', delta, file=sys.stderr)
-            sys.stderr.flush()
-            time.sleep(delta)
-    return time.time() + dt
-
-
 def collect_cli(cmd):
-    verbose = cmd.verbose
-    dt = cmd.dt  # needs to be longer than 6 timeouts
-
-    con = sqlite.connect(cmd.sqlitedb, verbose=verbose)
-
-    t_next = None
-
-    try:
-        while True:
-            t_next = sleep_some(t_next, dt, verbose=verbose)
-            t_start = time.time()
-
-            data, errors = collect.collect_one(verbose=verbose)
-            sqlite.write(con, t_start, 'timing', data, verbose=verbose)
-            sqlite.write(con, t_start, 'errors', errors, verbose=verbose)
-
-            if verbose:
-                print('committing...', file=sys.stderr)
-                sys.stderr.flush()
-            con.commit()
-    except KeyboardInterrupt:
-        print('\n^C seen, gracefully closing database', file=sys.stderr)
-        sys.stderr.flush()
-        con.close()
-        sys.exit(1)
+    collect.collect_loop(cmd.sqlitedb, cmd.dt, verbose=cmd.verbose)

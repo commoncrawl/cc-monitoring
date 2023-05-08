@@ -83,9 +83,6 @@ def write(con, ts, table, data, verbose=0):
 
     if verbose:
         print('inserting', len(data), 'items', file=sys.stderr)
-    if len(data) == 0:
-        # don't insert empty rows
-        return
 
     for k, v in list(data.items()):
         if v is None or k.startswith('http_'):  # http_ not yet created

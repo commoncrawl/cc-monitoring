@@ -7,6 +7,8 @@ from functools import partial
 
 import requests
 
+from . import sqlite
+
 
 headers = {'User-Agent': 'time-cc.py greg at common crawl'}
 
@@ -141,3 +143,44 @@ def collect_one(verbose=0):
         print('errors', errors)
 
     return data, errors
+
+
+def sleep_some(t_next, dt, verbose=0):
+    if t_next is not None:
+        delta = t_next - time.time()
+        if delta > 0:
+            if verbose:
+                print('sleeping for', delta, file=sys.stderr)
+            sys.stderr.flush()
+            time.sleep(delta)
+    return time.time() + dt
+
+
+def collect_loop(sqlitedb, dt, verbose=0):
+    con = sqlite.connect(sqlitedb, verbose=verbose)
+
+    t_next = None
+    last_errors_notnull = True
+
+    try:
+        while True:
+            t_next = sleep_some(t_next, dt, verbose=verbose)
+            t_start = time.time()
+
+            data, errors = collect_one(verbose=verbose)
+            sqlite.write(con, t_start, 'timing', data, verbose=verbose)
+            if len(errors) or last_errors_notnull:
+                sqlite.write(con, t_start, 'errors', errors, verbose=verbose)
+                if verbose and not errors:
+                    print('intentionally inserting null errors record')
+            last_errors_notnull = bool(len(errors))
+
+            if verbose:
+                print('committing...', file=sys.stderr)
+                sys.stderr.flush()
+            con.commit()
+    except KeyboardInterrupt:
+        print('\n^C seen, gracefully closing database', file=sys.stderr)
+        sys.stderr.flush()
+        con.close()
+        sys.exit(1)
