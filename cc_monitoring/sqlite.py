@@ -6,10 +6,7 @@ import time
 import sqlite3
 
 
-def initdb(cmd):
-    verbose = cmd.verbose
-    sqlitedb = cmd.sqlitedb
-
+def initdb(sqlitedb, wal, verbose=0):
     if os.path.exists(sqlitedb):
         raise ValueError('file found: {} refusing to overwrite'.format(sqlitedb))
 
@@ -32,14 +29,15 @@ def initdb(cmd):
     cur.execute('CREATE TABLE errors (time INTEGER NOT NULL, {})'.format(errors_str))
     cur.execute('CREATE INDEX idx_errors ON errors(time)')
 
-    if cmd.wal != 0:
+    if wal != 0:
         # cli.py default is None, which != 0
         # there are places below which assume WAL is on
-        configure_wal(cur, cmd.wal, verbose=verbose)
+        configure_wal(cur, wal, verbose=verbose)
 
     cur.close()
     con.commit()
     con.close()
+    return 0
 
 
 def connect(database, *args, verbose=0, **kwargs):

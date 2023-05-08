@@ -183,4 +183,5 @@ def collect_loop(sqlitedb, dt, verbose=0):
         print('\n^C seen, gracefully closing database', file=sys.stderr)
         sys.stderr.flush()
         con.close()
-        sys.exit(1)
+        return 1
+    return 0

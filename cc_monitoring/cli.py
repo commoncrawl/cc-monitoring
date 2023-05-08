@@ -20,7 +20,7 @@ def main(args=None):
 
     initdb = subparsers.add_parser('initdb', help='initialize a sqlite database')
     initdb.add_argument('--wal', action='store', help='size of the write ahead log, default 1000 4k pages. 0 to disable.')
-    initdb.set_defaults(func=sqlite.initdb)
+    initdb.set_defaults(func=initdb_cli)
 
     collect = subparsers.add_parser('collect', help='collect data and write to sqlite')
     collect.add_argument('--dt', action='store', type=int, default=300, help='time between calls, seconds, default=300')
@@ -30,5 +30,9 @@ def main(args=None):
     return cmd.func(cmd)
 
 
+def initdb_cli(cmd):
+    return sqlite.initdb(cmd.sqlitedb, cmd.wal, verbose=cmd.verbose)
+
+
 def collect_cli(cmd):
-    collect.collect_loop(cmd.sqlitedb, cmd.dt, verbose=cmd.verbose)
+    return collect.collect_loop(cmd.sqlitedb, cmd.dt, verbose=cmd.verbose)
