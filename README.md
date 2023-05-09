@@ -25,3 +25,10 @@ directory that the database is in must be writeable by the ccm process.
 
 * Grafana server (to be named later)
 * [User-oriented documentation](https://docs.google.com/document/d/1RJ5LnTGSZY159eRzg8NhRnxSIHusyd6xzEhoEa28ju8/edit?usp=sharing)
+
+# Exporting dashboards
+
+* Click the share icon in the upper left
+* Export
+* turn on Export for sharing externally
+* Save to file

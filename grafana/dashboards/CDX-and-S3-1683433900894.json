@@ -56,7 +56,20 @@
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
   "id": null,
-  "links": [],
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": false,
+      "keepTime": false,
+      "tags": [],
+      "targetBlank": true,
+      "title": "Explanation of time series names",
+      "tooltip": "explainer",
+      "type": "link",
+      "url": "https://docs.google.com/document/d/1RJ5LnTGSZY159eRzg8NhRnxSIHusyd6xzEhoEa28ju8/edit?usp=sharing"
+    }
+  ],
   "liveNow": false,
   "panels": [
     {
@@ -100,6 +113,7 @@
               "mode": "off"
             }
           },
+          "displayName": "${__field.name}",
           "mappings": [],
           "max": 5,
           "thresholds": {
@@ -198,6 +212,7 @@
               "mode": "off"
             }
           },
+          "displayName": "${__field.name}",
           "mappings": [],
           "min": 0,
           "thresholds": {
@@ -286,8 +301,8 @@
             "scaleDistribution": {
               "type": "linear"
             },
-            "showPoints": "auto",
-            "spanNulls": false,
+            "showPoints": "always",
+            "spanNulls": 600000,
             "stacking": {
               "group": "A",
               "mode": "none"
@@ -296,6 +311,7 @@
               "mode": "off"
             }
           },
+          "displayName": "${__field.name}",
           "mappings": [],
           "max": 5,
           "min": 0,
@@ -395,6 +411,7 @@
               "mode": "off"
             }
           },
+          "displayName": "${__field.name}",
           "mappings": [],
           "max": 4,
           "min": 0,
@@ -463,7 +480,7 @@
     "list": []
   },
   "time": {
-    "from": "now-6h",
+    "from": "now-3d",
     "to": "now"
   },
   "timepicker": {},
