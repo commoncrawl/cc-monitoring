@@ -102,7 +102,9 @@ def wrap(func, errors, url='pbm.com'):
             if e.response.status_code in {500, 503}:
                 kind = 'slow_down'
             else:
-                kind = 'http_'+str(e.resp.status_code)
+                # example: requests.exceptions.HTTPError: 403 Client Error:
+                #   Forbidden for url: https://data.commoncrawl.org/...704-00168.warc.gz
+                kind = 'http_'+str(e.response.status_code)
         else:
             print('Saw surprising exception: '+repr(e), file=sys.stderr)
             kind = 'unknown'
