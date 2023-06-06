@@ -1,0 +1,37 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iam:CreateRole",
+                "iam:CreatePolicy",
+                "iam:AttachRolePolicy",
+                "iam:PassRole"
+            ],
+            "Resource": [
+                "arn:aws:iam::*:role/service-role/CWDBSharing*",
+                "arn:aws:iam::*:policy/*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cognito-idp:*",
+                "cognito-identity:*"
+            ],
+            "Resource": [
+                "*"
+            ]
+        },
+        {
+            "Effect": "Allow",
+            "Action": [
+                "cloudwatch:GetDashboard"
+            ],
+            "Resource": [
+                "*"
+            ]
+        }
+    ]
+}
