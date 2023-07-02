@@ -1,0 +1,136 @@
+{
+    "widgets": [
+        {
+            "height": 6,
+            "width": 6,
+            "y": 0,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ { "expression": "m1/PERIOD(m1)", "label": "AllRequests", "id": "e1", "region": "us-east-1" } ],
+                    [ { "expression": "(m2+m3)/PERIOD(m1)", "label": "Errors", "id": "e2" } ],
+                    [ "AWS/S3", "AllRequests", "BucketName", "commoncrawl", "FilterId", "EntireBucket", { "region": "us-east-1", "id": "m1", "visible": false } ],
+                    [ ".", "4xxErrors", ".", ".", ".", ".", { "id": "m2", "visible": false } ],
+                    [ ".", "5xxErrors", ".", ".", ".", ".", { "id": "m3", "visible": false } ]
+                ],
+                "legend": {
+                    "position": "bottom"
+                },
+                "region": "us-east-1",
+                "liveData": false,
+                "timezone": "UTC",
+                "title": "AllRequests",
+                "view": "timeSeries",
+                "stacked": false,
+                "period": 300,
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "showUnits": false,
+                        "label": "per second"
+                    }
+                },
+                "stat": "Sum"
+            }
+        },
+        {
+            "height": 6,
+            "width": 6,
+            "y": 6,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ { "expression": "m1*8/PERIOD(m1)/1000000000.0", "label": "BytesDownloaded", "id": "e1", "region": "us-east-1" } ],
+                    [ "AWS/S3", "BytesDownloaded", "BucketName", "commoncrawl", "FilterId", "EntireBucket", { "stat": "Sum", "region": "us-east-1", "id": "m1", "visible": false } ]
+                ],
+                "legend": {
+                    "position": "bottom"
+                },
+                "region": "us-east-1",
+                "liveData": false,
+                "timezone": "UTC",
+                "title": "BytesDownloaded",
+                "view": "timeSeries",
+                "stacked": false,
+                "period": 300,
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "label": "Gbit/s",
+                        "showUnits": false
+                    }
+                },
+                "stat": "Average"
+            }
+        },
+        {
+            "height": 6,
+            "width": 6,
+            "y": 6,
+            "x": 6,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ { "expression": "m1*8/300./1000000000.0", "label": "BytesUploaded", "id": "e1", "region": "us-east-1" } ],
+                    [ "AWS/S3", "BytesUploaded", "BucketName", "commoncrawl", "FilterId", "EntireBucket", { "stat": "Sum", "region": "us-east-1", "id": "m1", "visible": false } ]
+                ],
+                "legend": {
+                    "position": "bottom"
+                },
+                "region": "us-east-1",
+                "liveData": false,
+                "timezone": "UTC",
+                "title": "BytesUploaded",
+                "view": "timeSeries",
+                "stacked": false,
+                "period": 300,
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "label": "Gbits/s",
+                        "showUnits": false
+                    }
+                },
+                "stat": "Average"
+            }
+        },
+        {
+            "height": 6,
+            "width": 6,
+            "y": 0,
+            "x": 6,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ { "expression": "(m1+m3)/m2*100.0", "label": "TotalErrors", "id": "e1", "region": "us-east-1" } ],
+                    [ { "expression": "m1/m2*100.0", "label": "4xx", "id": "e2", "region": "us-east-1" } ],
+                    [ { "expression": "m3/m2*100.0", "label": "5xx", "id": "e3", "region": "us-east-1" } ],
+                    [ "AWS/S3", "4xxErrors", "BucketName", "commoncrawl", "FilterId", "EntireBucket", { "region": "us-east-1", "id": "m1", "visible": false } ],
+                    [ ".", "AllRequests", ".", ".", ".", ".", { "region": "us-east-1", "visible": false, "id": "m2" } ],
+                    [ ".", "5xxErrors", ".", ".", ".", ".", { "region": "us-east-1", "id": "m3", "visible": false } ]
+                ],
+                "legend": {
+                    "position": "bottom"
+                },
+                "region": "us-east-1",
+                "liveData": false,
+                "timezone": "UTC",
+                "title": "Errors",
+                "view": "timeSeries",
+                "stacked": false,
+                "period": 300,
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "showUnits": false,
+                        "label": "%",
+                        "max": 100
+                    }
+                },
+                "stat": "Sum"
+            }
+        }
+    ]
+}

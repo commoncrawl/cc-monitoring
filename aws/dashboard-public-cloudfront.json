@@ -1,0 +1,132 @@
+{
+    "widgets": [
+        {
+            "height": 6,
+            "width": 6,
+            "y": 0,
+            "x": 6,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ "AWS/CloudFront", "TotalErrorRate", "DistributionId", "E302R5Z0C3JFR3", "Region", "Global", { "period": 300, "stat": "Average", "region": "us-east-1" } ]
+                ],
+                "legend": {
+                    "position": "bottom"
+                },
+                "region": "us-east-1",
+                "liveData": false,
+                "timezone": "UTC",
+                "title": "TotalErrorRate",
+                "view": "timeSeries",
+                "stacked": false,
+                "period": 300,
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "max": 100
+                    }
+                }
+            }
+        },
+        {
+            "height": 6,
+            "width": 6,
+            "y": 6,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ { "expression": "m1*8/300.0/1000000000.0", "label": "BytesDownloaded gbit/s", "id": "e1", "region": "us-east-1" } ],
+                    [ "AWS/CloudFront", "BytesDownloaded", "DistributionId", "E302R5Z0C3JFR3", "Region", "Global", { "stat": "Sum", "region": "us-east-1", "id": "m1", "visible": false } ]
+                ],
+                "legend": {
+                    "position": "bottom"
+                },
+                "region": "us-east-1",
+                "liveData": false,
+                "timezone": "UTC",
+                "title": "BytesDownloaded",
+                "view": "timeSeries",
+                "stacked": false,
+                "period": 300,
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "label": "Gbit/s",
+                        "showUnits": false
+                    }
+                },
+                "stat": "Average"
+            }
+        },
+        {
+            "height": 6,
+            "width": 6,
+            "y": 0,
+            "x": 0,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ { "expression": "m2/PERIOD(m2)", "label": "Requests/s", "id": "e2", "region": "us-east-1" } ],
+                    [ { "expression": "(m1+m3)/PERIOD(m2)", "label": "Errors/s", "id": "e1", "region": "us-east-1" } ],
+                    [ "AWS/CloudFront", "Requests", "Region", "Global", "DistributionId", "E302R5Z0C3JFR3", { "id": "m2", "region": "us-east-1", "visible": false } ],
+                    [ ".", "4xxErrorRate", ".", ".", ".", ".", { "id": "m1", "region": "us-east-1", "visible": false } ],
+                    [ ".", "5xxErrorRate", ".", ".", ".", ".", { "id": "m3", "region": "us-east-1", "visible": false } ]
+                ],
+                "legend": {
+                    "position": "bottom"
+                },
+                "region": "us-east-1",
+                "liveData": false,
+                "timezone": "UTC",
+                "title": "Requests per second",
+                "view": "timeSeries",
+                "stacked": false,
+                "period": 300,
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "label": "requests/s",
+                        "showUnits": false
+                    }
+                },
+                "stat": "Sum"
+            }
+        },
+        {
+            "height": 6,
+            "width": 6,
+            "y": 6,
+            "x": 6,
+            "type": "metric",
+            "properties": {
+                "metrics": [
+                    [ { "expression": "m2/PERIOD(m2)", "label": "Requests/s", "id": "e2", "region": "us-east-1", "visible": false } ],
+                    [ { "expression": "(m1+m3)/(m1+m2+m3)*100.0", "label": "Errors", "id": "e1", "region": "us-east-1" } ],
+                    [ "AWS/CloudFront", "Requests", "Region", "Global", "DistributionId", "E302R5Z0C3JFR3", { "id": "m2", "region": "us-east-1", "visible": false } ],
+                    [ ".", "4xxErrorRate", ".", ".", ".", ".", { "id": "m1", "region": "us-east-1", "visible": false } ],
+                    [ ".", "5xxErrorRate", ".", ".", ".", ".", { "id": "m3", "region": "us-east-1", "visible": false } ]
+                ],
+                "legend": {
+                    "position": "bottom"
+                },
+                "region": "us-east-1",
+                "liveData": false,
+                "timezone": "UTC",
+                "title": "Errors, another way",
+                "view": "timeSeries",
+                "stacked": false,
+                "period": 300,
+                "yAxis": {
+                    "left": {
+                        "min": 0,
+                        "label": "%",
+                        "showUnits": false,
+                        "max": 100
+                    }
+                },
+                "stat": "Sum"
+            }
+        }
+    ]
+}
