@@ -1,0 +1,37 @@
+{
+  "Name": "everyone-data",
+  "Id": "ed6b6e8c-551b-437e-a231-94ee05bbf896",
+  "ARN": "arn:aws:wafv2:us-east-1:949746302274:global/webacl/everyone-data/ed6b6e8c-551b-437e-a231-94ee05bbf896",
+  "DefaultAction": {
+    "Allow": {}
+  },
+  "Description": "",
+  "Rules": [
+    {
+      "Name": "everyone-data-block",
+      "Priority": 0,
+      "Statement": {
+        "RateBasedStatement": {
+          "Limit": 900,
+          "AggregateKeyType": "IP"
+        }
+      },
+      "Action": {
+        "Block": {}
+      },
+      "VisibilityConfig": {
+        "SampledRequestsEnabled": true,
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "everyone-data-block"
+      }
+    }
+  ],
+  "VisibilityConfig": {
+    "SampledRequestsEnabled": true,
+    "CloudWatchMetricsEnabled": true,
+    "MetricName": "everyone-data"
+  },
+  "Capacity": 2,
+  "ManagedByFirewallManager": false,
+  "LabelNamespace": "awswaf:949746302274:webacl:everyone-data:"
+}
