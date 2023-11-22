@@ -8,11 +8,31 @@
   "Description": "",
   "Rules": [
     {
-      "Name": "everyone-data-rate",
+      "Name": "everyone-data-block",
       "Priority": 0,
       "Statement": {
         "RateBasedStatement": {
-          "Limit": 100,
+          "Limit": 6000,
+          "EvaluationWindowSec": 300,
+          "AggregateKeyType": "IP"
+        }
+      },
+      "Action": {
+        "Block": {}
+      },
+      "VisibilityConfig": {
+        "SampledRequestsEnabled": true,
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "everyone-data-block"
+      }
+    },
+    {
+      "Name": "everyone-data-count-20rps",
+      "Priority": 1,
+      "Statement": {
+        "RateBasedStatement": {
+          "Limit": 6000,
+          "EvaluationWindowSec": 300,
           "AggregateKeyType": "IP"
         }
       },
@@ -22,7 +42,64 @@
       "VisibilityConfig": {
         "SampledRequestsEnabled": true,
         "CloudWatchMetricsEnabled": true,
-        "MetricName": "everyone-data-rate"
+        "MetricName": "everyone-data-count-20rps"
+      }
+    },
+    {
+      "Name": "everyone-data-count-10rps",
+      "Priority": 2,
+      "Statement": {
+        "RateBasedStatement": {
+          "Limit": 3000,
+          "EvaluationWindowSec": 300,
+          "AggregateKeyType": "IP"
+        }
+      },
+      "Action": {
+        "Count": {}
+      },
+      "VisibilityConfig": {
+        "SampledRequestsEnabled": true,
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "everyone-data-count-10rps"
+      }
+    },
+    {
+      "Name": "everyone-data-count-5rps",
+      "Priority": 3,
+      "Statement": {
+        "RateBasedStatement": {
+          "Limit": 1500,
+          "EvaluationWindowSec": 300,
+          "AggregateKeyType": "IP"
+        }
+      },
+      "Action": {
+        "Count": {}
+      },
+      "VisibilityConfig": {
+        "SampledRequestsEnabled": true,
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "everyone-data-count-5rps"
+      }
+    },
+    {
+      "Name": "everyone-data-count-40rps",
+      "Priority": 4,
+      "Statement": {
+        "RateBasedStatement": {
+          "Limit": 12000,
+          "EvaluationWindowSec": 300,
+          "AggregateKeyType": "IP"
+        }
+      },
+      "Action": {
+        "Count": {}
+      },
+      "VisibilityConfig": {
+        "SampledRequestsEnabled": true,
+        "CloudWatchMetricsEnabled": true,
+        "MetricName": "everyone-data-count-40rps"
       }
     }
   ],
@@ -31,7 +108,7 @@
     "CloudWatchMetricsEnabled": true,
     "MetricName": "everyone-data"
   },
-  "Capacity": 2,
+  "Capacity": 10,
   "ManagedByFirewallManager": false,
   "LabelNamespace": "awswaf:949746302274:webacl:everyone-data:"
 }
